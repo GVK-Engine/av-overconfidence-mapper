@@ -20,9 +20,7 @@ I measured mine on 11,000 Monte Carlo trials and validated it on real KITTI foot
 
 *Confidence stays high. Accuracy collapses. The gap between them is the danger.*
 
-[![Death Zone Explainer](https://drive.google.com/thumbnail?id=1TFTGkgdB5QZTCG0kcBoKV19H5JfUrBOm&sz=w1280)](https://drive.google.com/file/d/1TFTGkgdB5QZTCG0kcBoKV19H5JfUrBOm/view)
-
-*Click to watch the synthetic explainer video.*
+![Death Zone Explainer](av_overconfidence_demo_gif.gif)
 
 ---
 
@@ -38,7 +36,7 @@ I measured mine on 11,000 Monte Carlo trials and validated it on real KITTI foot
 
 ## Confidence vs Accuracy Divergence
 
-![Hero Chart](https://drive.google.com/thumbnail?id=1e4IbTQN-LglQPtU6WO0dVmPhSCNwg-4h&sz=w1280)
+![Hero Chart](results/charts/hero_confidence_accuracy.png)
 
 The finding: Exposure Loss plus Glare enters the death zone at 53% degradation. That is 1.6x earlier than the most forgiving condition tested. Camera-dependent failures happen far sooner than most engineering discussions assume.
 
@@ -48,19 +46,19 @@ The finding: Exposure Loss plus Glare enters the death zone at 53% degradation. 
 
 *Every condition, every degradation level. Red = system confidently wrong.*
 
-![Death Zone Heatmap](https://drive.google.com/thumbnail?id=15D4u4ZsaT2xjaUA4isMxtwpsaxdJ_NfM&sz=w1280)
+![Death Zone Heatmap](results/charts/death_zone_heatmap.png)
 
 ---
 
 ## Real 2026 Incidents vs Measured Boundaries
 
-![Incident Correlation](https://drive.google.com/thumbnail?id=1v5Hcnab9r6PnVEMWB9xYO7nhiqq_xpjV&sz=w1280)
+![Incident Correlation](results/charts/incident_correlation.png)
 
 ---
 
 ## Safety Envelope
 
-![Safety Envelope](https://drive.google.com/thumbnail?id=1CRR329gFQVx72gJcdo3rgHQTczruDLLB&sz=w1280)
+![Safety Envelope](results/charts/safety_envelope.png)
 
 ---
 
@@ -182,17 +180,17 @@ Update `KITTI_DIR` in `generate_real_video.py` to your local KITTI path.
 
 ```
 av-overconfidence-mapper/
-├── config.py                     all experiment parameters
-├── main.py                       full analysis pipeline entry point
-├── generate_real_video.py        real KITTI + YOLOv8 validation
+├── config.py                       all experiment parameters
+├── main.py                         full analysis pipeline entry point
+├── generate_real_video.py          real KITTI + YOLOv8 validation
 ├── src/
 │   ├── perception/
-│   │   └── detector.py           confidence and accuracy curve models
+│   │   └── detector.py             confidence and accuracy curve models
 │   ├── analysis/
-│   │   └── calibration.py        Monte Carlo runner and boundary detection
+│   │   └── calibration.py          Monte Carlo runner and boundary detection
 │   └── visualization/
-│       ├── charts.py             all four analysis charts
-│       └── video_generator.py    synthetic explainer video
+│       ├── charts.py               all four analysis charts
+│       └── video_generator.py      synthetic explainer video
 └── results/
     ├── charts/
     │   ├── hero_confidence_accuracy.png
@@ -202,8 +200,9 @@ av-overconfidence-mapper/
     ├── videos/
     │   ├── av_overconfidence_demo.mp4
     │   └── real_overconfidence_demo.mp4
-    └── logs/
-        └── analysis.json
+    └── gifs/
+        ├── av_overconfidence_demo_gif.gif
+        └── real_overconfidence_demo_gif.gif
 ```
 
 ---
@@ -229,8 +228,7 @@ Day 11: Sun glare collapses detection 56.5%.
 This project: measures the exact degradation threshold
         where a model stops being honest about
         what it can and cannot see.
-        The death zone is the common thread across
-        all previous failure measurements.
+        The death zone is the common thread.
 ```
 
 ---
@@ -239,7 +237,7 @@ This project: measures the exact degradation threshold
 
 | Project | Key Finding | Status |
 |---------|-------------|--------|
-| P1.1 LiDAR Obstacle Detection | 86ms, 28 objects, voxel safety analysis | ✅ |
+| P1.1 LiDAR Obstacle Detection | 86ms, 28 objects | ✅ |
 | P1.2 Stereo Camera Depth Safety | Camera unsafe beyond 35m | ✅ |
 | P1.3 PointPillars 3D Detector | 98.9% loss reduction from scratch | ✅ |
 | P1.4 Multi-Camera BEV Perception | 178 objects from 6 cameras | ✅ |
