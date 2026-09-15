@@ -28,9 +28,7 @@ I measured mine on 11,000 Monte Carlo trials and validated it on real KITTI foot
 
 *Green = still detected. Red MISSED = detected clean, lost after degradation.*
 
-[![Real Detection Demo](https://drive.google.com/thumbnail?id=1latz1nnMrEDc_Y0Q3WEVb4H8sWP80QuM&sz=w1280)](https://drive.google.com/file/d/1latz1nnMrEDc_Y0Q3WEVb4H8sWP80QuM/view)
-
-*Click to watch real KITTI footage with YOLOv8 detection under progressive degradation.*
+![Real Detection Demo](real_overconfidence_demo_gif.gif)
 
 ---
 
