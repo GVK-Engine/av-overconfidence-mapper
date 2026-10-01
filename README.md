@@ -6,11 +6,9 @@
 
 ## The Question Nobody Answers
 
-Waymo struck a child in January 2026. It braked, but not in time. Waymo recalled 3,871 vehicles for entering construction zones. Motional released an entire dataset on edge case failures in September 2026.
+In January 2026, a Waymo vehicle braked hard, cutting speed from 17 mph to under 6 mph, before striking a child who ran from behind a parked SUV. The child had minor injuries. NHTSA is still investigating whether the vehicle showed appropriate caution near a school during drop-off hours. In June 2026, Waymo recalled 3,871 vehicles after 13 incidents of driving into active freeway construction zones. In September 2026, Motional open-sourced nuReasoning, a 20,000-scenario dataset of real-world edge cases, citing the same industry-wide gap: AV systems that fail on rare situations without warning.
 
-None of these systems reported low confidence before failing.
-
-The question nobody has measured: at exactly what degradation level does a perception system start lying to itself about how well it can see?
+None of these incidents were caused by a model reporting low confidence before failing. That is the pattern I wanted to measure directly: at exactly what degradation level does a perception system start lying to itself about how well it can see?
 
 I measured it on 11,000 Monte Carlo trials and validated it on real KITTI footage with YOLOv8.
 
@@ -48,12 +46,6 @@ Exposure Loss plus Glare enters the death zone at 53% degradation. That is 1.6x 
 
 ---
 
-## Real 2026 Incidents vs Measured Boundaries
-
-![Incident Correlation](incident_correlation.png)
-
----
-
 ## Safety Envelope
 
 ![Safety Envelope](safety_envelope.png)
@@ -64,13 +56,13 @@ Exposure Loss plus Glare enters the death zone at 53% degradation. That is 1.6x 
 
 **Finding 1: Exposure Loss + Glare is the most dangerous condition.**
 
-| Condition | Death Zone Entry | Real Incident |
-|---|---|---|
-| Exposure Loss + Glare | 53% | Motional nuReasoning edge case |
-| Construction Zone | 66% | Waymo 3,871 vehicle recall 2026 |
-| School Zone Occlusion | 67% | Waymo child strike Jan 2026 |
-| Rain + Crowd | 82% | Motional nuReasoning edge case |
-| Blind Curve | 84% | Waymo stopped school bus 2026 |
+| Condition | Death Zone Entry |
+|---|---|
+| Exposure Loss + Glare | 53% |
+| Construction Zone | 66% |
+| School Zone Occlusion | 67% |
+| Rain + Crowd | 82% |
+| Blind Curve | 84% |
 
 Death zone = confidence above 80% while true accuracy is below 50%.
 
@@ -131,6 +123,8 @@ The gap between claim and reality opens 15-20 percentage points before the death
 ---
 
 ## Why This Matters Beyond Autonomous Vehicles
+
+Real-world incidents like the ones above are why the question matters: not whether an AV fails, but whether it knows and signals when it is failing. This project measures that signal gap directly.
 
 Boston Dynamics is deploying Atlas inside Hyundai factories now. Production Atlas uses a 360-degree camera suite with no LiDAR. Factory dust and inconsistent lighting are exactly the camera-specific degradation this project measures. If Atlas's confidence stays high while accuracy silently drops on a dusty factory floor, that is the same death zone, different environment, same cause.
 
